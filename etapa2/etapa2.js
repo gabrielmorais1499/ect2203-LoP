@@ -1,4 +1,4 @@
-//windowWith: 1326
+//windowWidth: 1326
 //windowHeight: 639
 
 var xJogador = 60;
@@ -44,7 +44,7 @@ function draw() {
    setup();
    
    /*
-    *Verificar tamanho da tela
+    *Verificar tamanho da tela:
     *text (windowHeight, 50, 50);
     *text(windowWidth, 100, 50);
    */
