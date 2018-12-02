@@ -44,54 +44,13 @@ function draw() {
   if (menu==0) {
     image(inicializar, 0, 0, windowWidth, windowHeight);
   }
-  
+
   //TELA DE JOGO
   if (menu==1) {
     image(jogo, 0, 0, windowWidth, windowHeight);  //Background
-    image(sasuke, xJogador, yJogador, 100, 140);  //Jogador
-    image(naruto, xObstaculo, yObstaculo, 90, 140); //Obstáculo
-    
-    //Fazer obstáculo se mover
-    xObstaculo = xObstaculo - 10;
-    if (xObstaculo<0) {
-      xObstaculo=1400;
-      pontos+=10;
-    }
-    //Fazer jogador mover para frente
-    if (keyIsDown(RIGHT_ARROW)) {
-      xJogador += 10;
-    }
-    //Fazer jogador mover para trás
-    if (keyIsDown(LEFT_ARROW)) {
-      xJogador -= 10;
-    }
-    //Fazer jogador mover para cima 
-    if (keyIsDown(UP_ARROW)) {
-      yJogador -= 10;
-    }
-    //Fazer jogador mover para baixo
-    if (keyIsDown(DOWN_ARROW)) {
-      yJogador += 10;
-    }
-    //Estabelecendo limites da tela
-    if (xJogador>width-25) {
-      xJogador -= 10;
-    } else if (xJogador<25) {
-      xJogador+=10;
-    } 
-    if (yJogador>height-20) {
-      yJogador-=10;
-    } else if (yJogador<20) {
-      yJogador+=10;
-    }
-    //Colisão entre jogador e obstáculo  
-    if ((xObstaculo-12<=xJogador+12 && xObstaculo+12>=xJogador-12) && (yObstaculo-5<=yJogador+5 && yObstaculo+5>=yJogador-5)) {
-      noLoop();        
-      if (vidas>0) {
-        vidas--;
-      }
-      setTimeout(reiniciar, 1000);
-    }
+    display();
+    move();   
+    colisao();    
   }
 
   if (menu==2) {
@@ -182,4 +141,57 @@ function mousePressed() {
   if (menu>3) {
     menu=0;
   }
+}
+
+function move() {
+  //Fazer obstáculo se mover
+  xObstaculo = xObstaculo - 10;
+  if (xObstaculo<0) {
+    xObstaculo=1400;
+    pontos+=10;
+  }
+
+  //Fazer jogador mover para frente
+  if (keyIsDown(RIGHT_ARROW)) {
+    xJogador += 10;
+  }
+  //Fazer jogador mover para trás
+  if (keyIsDown(LEFT_ARROW)) {
+    xJogador -= 10;
+  }
+  //Fazer jogador mover para cima 
+  if (keyIsDown(UP_ARROW)) {
+    yJogador -= 10;
+  }
+  //Fazer jogador mover para baixo
+  if (keyIsDown(DOWN_ARROW)) {
+    yJogador += 10;
+  }
+  //Estabelecendo limites da tela
+  if (xJogador>width-25) {
+    xJogador -= 10;
+  } else if (xJogador<25) {
+    xJogador+=10;
+  } 
+  if (yJogador>height-20) {
+    yJogador-=10;
+  } else if (yJogador<20) {
+    yJogador+=10;
+  }
+}
+
+function display() {
+  image(sasuke, xJogador, yJogador, 100, 140);  //Jogador
+  image(naruto, xObstaculo, yObstaculo, 90, 140); //Obstáculo
+}
+
+function colisao(){
+  //Colisão entre jogador e obstáculo  
+    if ((xObstaculo-12<=xJogador+12 && xObstaculo+12>=xJogador-12) && (yObstaculo-5<=yJogador+5 && yObstaculo+5>=yJogador-5)) {
+      noLoop();        
+      if (vidas>0) {
+        vidas--;
+      }
+      setTimeout(reiniciar, 1000);
+    }
 }
