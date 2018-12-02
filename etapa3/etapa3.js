@@ -12,12 +12,10 @@ function setup() {
   //textSize(16);
     
   //Jogador
-  ellipse(xJogador, yJogador, 50, 50);        
   fill(255, 255, 255);                        
-  
+  ellipse(xJogador, yJogador, 50, 50);  
   //Obstáculo
-  rect (xObstaculo, yObstaculo, 50, 50);                   
-  fill(255, 255, 255);                        
+  rect (xObstaculo, yObstaculo, 50, 50);
 }
 
 function draw() {
