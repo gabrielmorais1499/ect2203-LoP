@@ -14,7 +14,7 @@ var nivel=1;
 var municao=7;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);    
+  createCanvas(windowWidth-10, windowHeight);    
   background(0);                              
   //textSize(16);  
 
@@ -57,8 +57,9 @@ function display(){
   for (var i=0; i<5; i++){
     fill(255, 255, 255);
     rect (xObstaculo[i], yObstaculo[i], 50, 50);
-  }  
+  }
 
+  //Tiro
   if(tiro==true){
     fill(255,0, 0);
     noStroke();
@@ -72,7 +73,8 @@ function move(){
     xObstaculo[i] = xObstaculo[i] - 10;
     if (xObstaculo[i]<0){
       yObstaculo[i]=random(50, windowHeight-50);
-      xObstaculo[i]=random(windowWidth, windowWidth+400);
+      xObstaculo[i]=random(windowWidth, windowWidth+800);      
+      pontos+=10;
     }
   }  
 
@@ -120,6 +122,7 @@ function colisao(){
       noLoop();        
       if(vidas>0){
         vidas--;
+        pontos=0;
       }
       setTimeout(reiniciar, 1000);
     }
