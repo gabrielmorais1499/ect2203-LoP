@@ -33,6 +33,8 @@ function preload(){
   nivel5=loadImage('nivel5.jpg');
   sasuke=loadImage('sasuke.png');
   naruto=loadImage('naruto.png');
+  shuriken=loadImage('shuriken.png');
+  clone=loadImage('clone.png');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -68,7 +70,18 @@ function display(){
     text('I N I C I A R', 580, 250);    
   } 
   if(menu==1){
-    image(nivel5, 0, 0, windowWidth, windowHeight);
+    //BACKGROUNDS
+    if(nivel==1){
+      image(nivel1, 0, 0, windowWidth, windowHeight);
+    } else if(nivel==2){
+      image(nivel2, 0, 0, windowWidth, windowHeight);
+    } else if(nivel==3){
+      image(nivel3, 0, 0, windowWidth, windowHeight);
+    } else if(nivel==4){
+      image(nivel4, 0, 0, windowWidth, windowHeight);
+    } else if(nivel==5){
+      image(nivel5, 0, 0, windowWidth, windowHeight);
+    }
     //Informações na tela:
     textSize(20);
     textStyle(BOLD)
@@ -88,9 +101,7 @@ function display(){
 
     //Tiro
     if(tiro==true){
-      fill(255,0, 0);
-      noStroke();
-      ellipse(xTiro, yTiro, 20, 20);
+      image(shuriken, xTiro, yTiro, 60, 60);
     }
     move();
   }
@@ -171,7 +182,7 @@ function move(){
   }
 
   if(tiro==true){
-    xTiro+=20;
+    xTiro+=12;
   }
 
   if(xTiro>=width){
@@ -272,17 +283,18 @@ function colisao(){
     if(tiro==true){
       if(xTiro>xObstaculo[i]-10 && (yTiro>=yObstaculo[i]-10 && yTiro<=yObstaculo[i]+10)){
         pontos+=20;
-        xTiro=1400;        
-        xObstaculo[i]=random(windowWidth, windowWidth+400);
-        yObstaculo[i]=random(50, windowHeight-50);
+        xTiro=1400;
+        image(clone, xObstaculo[i], yObstaculo[i], 120, 120);
+        yObstaculo[i]=random(50, windowHeight-70);
+        xObstaculo[i]=random(windowWidth, windowWidth+1000);
       }
     }
   }
 }
 
 function reiniciar(){
-  for(var i=0; i<5; i++){    
-    yObstaculo[i]=random(50, windowHeight-50);
+  for(var i=0; i<5; i++){
+    yObstaculo[i]=random(50, windowHeight-70);
     xObstaculo[i]=random(windowWidth, windowWidth+1000);
   }
   xJogador=60;
