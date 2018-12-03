@@ -13,14 +13,16 @@ var pontos=0;
 var nivel=1;
 var municao=10;
 var pontuacao=0;
-var score=new Array();
+var score=new Array(0, 0, 0, 0, 0, 0);
 var menu=0;
 var velocidade=4;
+var xKakashi=1140;
+var yKakashi=445;
 
 //IMAGENS
 var menu0, menu2, menu3;  //backgrounds menus
 var nivel1, nivel2, nivel3, nivel4, nivel5; //backgrounds niveis
-var sasuke, naruto, shuriken, clone;  //personagens + elementos
+var sasuke, naruto, shuriken, clone, kakashi;  //personagens + elementos
 
 function preload(){
   menu0=loadImage('back0.jpg');
@@ -35,6 +37,7 @@ function preload(){
   shuriken=loadImage('shuriken.png');
   clone=loadImage('clone.png');
   naruto=loadImage('naruto.png');
+  kakashi=loadImage('kakashi.png');
 }
 
 function setup() {
@@ -53,7 +56,6 @@ function draw() {
   clear();           //Limpa a tela após o movimento
   //setup();
   display();
-   
   /*
   *Verificar tamanho da tela
   *text (windowHeight, 50, 50);
@@ -65,11 +67,12 @@ function display(){
 
   if (menu==0){
     image(menu0, 0, 0, windowWidth, windowHeight);
-    textSize(100);
+    textSize(40);
     textStyle(BOLD);
     fill(255);
+    strokeWeight(8);
     stroke(0);
-    text('I N I C I A R', 580, 250);    
+    text('I N I C I A R', 237, 123);    
   } 
   if(menu==1){
     //BACKGROUNDS
@@ -88,7 +91,8 @@ function display(){
     textSize(20);
     textStyle(BOLD)
     fill(255);
-    stroke(0);
+    strokeWeight(3);
+    stroke(0);    
     text('PONTUAÇÃO: '+pontos, 50, 50);
     text('VIDAS: '+vidas, 1150, 50);
     textSize(13);  
@@ -116,24 +120,45 @@ function display(){
     textStyle(BOLD)
     fill(0);
     stroke(255);
-    text('GAME OVER', 380, 250);    
+    text('GAME OVER', 167, 150);
+    /*strokeWeight(3);
+    textSize(30);
+    text('Tentar novamente', 60, 649);
+    textSize(20);
+    text('MENU', 1227, 649);
+    if(menu==2){
+      if((mouseX>=62 && mouseX<=363) && (mouseY>=627 && mouseY<=649)){      
+        menu=1;
+      } 
+      if((mouseX>=1231 && mouseX<=1303) && (mouseY>=632 && mouseY<=649)){
+        menu=0;    
+      }
+    }*/
   }
   if(menu==3){
     //ZERAR O JOGO
-    image(menu3, 0, 0, windowWidth, windowHeight);
-    
-    textSize(30);
+    image(menu3, 0, 0, windowWidth, windowHeight);    
+    image(kakashi, xKakashi, yKakashi, 220, 220);
+
+    textSize(40);
     textSize(BOLD);
-    fill(0);
-    text('Pontuação: ', 400, 150);
+    fill(230);
+    stroke(0);
+    strokeWeight(3);
+    text('Pontuação: ', 101, 180);
     textStyle(NORMAL);
-    textSize(20);
-    text('Nivel 1: ' + score[0], 400, 200);
-    text('Nivel 2: ' + score[1], 400, 230);
-    text('Nivel 3: ' + score[2], 400, 260);
-    text('Nivel 4: ' + score[3], 400, 290);
-    text('Nivel 5: ' + score[4], 400, 320);
-    text('Total: ' + pontuacao, 400, 350);
+    textSize(30);
+    text('Nivel 1: ' + score[0], 101, 230);
+    text('Nivel 2: ' + score[1], 101, 270);
+    text('Nivel 3: ' + score[2], 101, 310);
+    text('Nivel 4: ' + score[3], 101, 350);
+    text('Nivel 5: ' + score[4], 101, 390);
+    text('Total: ' + pontuacao, 101, 430);
+    textStyle(BOLD);
+    fill(0);
+    stroke(150);
+    strokeWeight(1);
+    text('Bom trabalho!', 1120, 439);
   }
 }
 
@@ -276,7 +301,7 @@ function move(){
 function colisao(){
   //Colisão JOGADOR-OBSTÁCULO
   for (var i=0; i<5; i++){
-    if ((xObstaculo[i]<=xJogador+80 && xObstaculo[i]+100>=xJogador-80) && (yObstaculo[i]-50<=yJogador+50 && yObstaculo[i]+50>=yJogador-50)){
+    if ((xObstaculo[i]<=xJogador+110 && xObstaculo[i]+70>=xJogador) && (yObstaculo[i]-50<=yJogador+50 && yObstaculo[i]+50>=yJogador-50)){
       noLoop();        
       if(vidas>0){
         vidas-=1;
@@ -285,7 +310,7 @@ function colisao(){
       setTimeout(reiniciar, 1000);
     }
     if(vidas==0){
-      menu=2;
+      setTimeout(game_over,1000);
     }
   }
 
@@ -297,7 +322,6 @@ function colisao(){
         xTiro=1400;
         municao-=1;
         image(clone, xObstaculo[i], yObstaculo[i], 120, 120);
-        yObstaculo[i]=random(0, windowHeight-120);
         xObstaculo[i]=random(windowWidth, windowWidth+1000);
       }
     }
@@ -318,9 +342,12 @@ function reiniciar(){
 
 function mousePressed(){
   if(menu==0){
-    menu=1;
-  }
-  if(menu==3){
-    menu=0;
-  }
+    if((mouseX>=240 && mouseX<=485) && (mouseY>=94 && mouseY<=126)){
+      menu=1;
+    }
+  }   
+}
+
+function game_over(){
+  menu=2;
 }
