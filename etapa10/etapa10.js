@@ -16,6 +16,7 @@ var pontuacao=0;
 var score=new Array(0, 0, 0, 0, 0, 0);
 var menu=0;
 var velocidade=4;
+var velocidadeSasuke=10;
 var xKakashi=1140;
 var yKakashi=445;
 
@@ -175,22 +176,22 @@ function move(){
 
   //Fazer jogador mover para frente
   if (keyIsDown(RIGHT_ARROW)){
-    xJogador += 10;
+    xJogador += velocidadeSasuke;
   }
   
   //Fazer jogador mover para trás
   if (keyIsDown(LEFT_ARROW)){
-   xJogador -= 10;
+   xJogador -= velocidadeSasuke;
   }
   
   //Fazer jogador mover para cima 
   if (keyIsDown(UP_ARROW)){
-    yJogador -= 10;
+    yJogador -= velocidadeSasuke;
   }
   
   //Fazer jogador mover para baixo
   if (keyIsDown(DOWN_ARROW)){
-    yJogador += 10;     
+    yJogador += velocidadeSasuke;     
   }
   
   //Estabelecendo limites da tela
@@ -244,7 +245,7 @@ function move(){
         pontuacao+=pontos;
         pontos=0;
         velocidade+=2;
-        municao=15;
+        municao=18;
         noLoop();
         setTimeout(reiniciar, 3000);
       }
@@ -258,7 +259,8 @@ function move(){
         pontuacao+=pontos;
         pontos=0;
         velocidade+=2;
-        municao=22;
+        velocidadeSasuke+=1;
+        municao=25;
         noLoop();
         setTimeout(reiniciar, 3000);
       }
@@ -271,7 +273,8 @@ function move(){
         score[3]=pontos;
         pontuacao+=pontos;
         velocidade+=1;
-        municao=34;
+        velocidadeSasuke+=2;
+        municao=38;
         noLoop();
         setTimeout(reiniciar, 3000);
         pontos=0;
@@ -286,7 +289,8 @@ function move(){
         pontuacao+=pontos;
         pontos=0;
         velocidade+=1;
-        municao=50;
+        velocidadeSasuke+=3;
+        municao=53;
         noLoop();
         setTimeout(reiniciar, 3000);
       }
@@ -301,7 +305,7 @@ function move(){
 function colisao(){
   //Colisão JOGADOR-OBSTÁCULO
   for (var i=0; i<5; i++){
-    if ((xObstaculo[i]<=xJogador+110 && xObstaculo[i]+70>=xJogador) && (yObstaculo[i]-50<=yJogador+50 && yObstaculo[i]+50>=yJogador-50)){
+    if ((xObstaculo[i]<=xJogador+100 && xObstaculo[i]+70>=xJogador) && (yObstaculo[i]-50<=yJogador+50 && yObstaculo[i]+50>=yJogador-50)){
       noLoop();        
       if(vidas>0){
         vidas-=1;
@@ -319,10 +323,12 @@ function colisao(){
     if(tiro==true){
       if(xTiro>xObstaculo[i]-50 && (yTiro>=yObstaculo[i]-50 && yTiro<=yObstaculo[i]+50)){
         pontos+=20;
-        xTiro=1400;
-        municao-=1;
+        xTiro=1400;        
         image(clone, xObstaculo[i], yObstaculo[i], 120, 120);
         xObstaculo[i]=random(windowWidth, windowWidth+1000);
+        if(municao>0){
+          municao-=1;
+        }
       }
     }
   }
