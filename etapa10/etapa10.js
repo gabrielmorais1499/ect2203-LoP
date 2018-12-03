@@ -196,14 +196,14 @@ function move(){
   
   //Estabelecendo limites da tela
   if (xJogador>width-110) {
-    xJogador -= 10;
+    xJogador -= velocidadeSasuke;
   } else if (xJogador<20) {
-    xJogador+=10;
+    xJogador+=velocidadeSasuke;
   } 
   if (yJogador>height-120) {
-    yJogador-=10;
+    yJogador-=velocidadeSasuke;
   } else if (yJogador<20) {
-    yJogador+=10;
+    yJogador+=velocidadeSasuke;
   }
 
   if(municao>0){
