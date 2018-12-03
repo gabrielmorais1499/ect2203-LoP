@@ -41,7 +41,7 @@ function setup() {
   image(menu0, 0, 0, windowWidth, windowHeight);
 
   for(var i=0; i<5; i++){    
-    yObstaculo[i]=random(50, windowHeight-50);
+    yObstaculo[i]=random(0, windowHeight-110);
     xObstaculo[i]=random(windowWidth, windowWidth+1000);
   }
 }
@@ -60,13 +60,13 @@ function draw() {
 }
 
 function display(){
-  background(0); 
 
   if (menu==0){
     image(menu0, 0, 0, windowWidth, windowHeight);
     textSize(100);
-    textStyle(BOLD)
+    textStyle(BOLD);
     fill(255);
+    stroke(0);
     text('I N I C I A R', 580, 250);    
   } 
   if(menu==1){
@@ -86,17 +86,18 @@ function display(){
     textSize(20);
     textStyle(BOLD)
     fill(255);
+    stroke(0);
     text('PONTUAÇÃO: '+pontos, 50, 50);
     text('VIDAS: '+vidas, 1150, 50);
     textSize(13);  
     text('Nível '+nivel, 1230, 589);
 
     //Jogador
-    image(sasuke, xJogador, yJogador, 90, 90);
+    image(sasuke, xJogador, yJogador, 120, 120);
     
     //Obstáculo
     for (var i=0; i<5; i++){
-      image(naruto, xObstaculo[i], yObstaculo[i], 90, 90);
+      image(naruto, xObstaculo[i], yObstaculo[i], 105, 105);
     }
 
     //Tiro
@@ -110,7 +111,7 @@ function display(){
     image(menu2, 0, 0, windowWidth, windowHeight);
     textSize(100);
     textStyle(BOLD)
-    fill(255);
+    fill(0);
     text('GAME OVER', 380, 250);    
   }
   if(menu==3){
@@ -119,7 +120,7 @@ function display(){
     
     textSize(30);
     textSize(BOLD);
-    fill(255);
+    fill(0);
     text('Pontuação: ', 400, 150);
     textStyle(NORMAL);
     textSize(20);
@@ -164,12 +165,12 @@ function move(){
   }
   
   //Estabelecendo limites da tela
-  if (xJogador>width-90) {
+  if (xJogador>width-110) {
     xJogador -= 10;
   } else if (xJogador<20) {
     xJogador+=10;
   } 
-  if (yJogador>height-90) {
+  if (yJogador>height-120) {
     yJogador-=10;
   } else if (yJogador<20) {
     yJogador+=10;
