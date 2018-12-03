@@ -11,7 +11,7 @@ var tiro=false;
 var vidas=5;
 var pontos=0;
 var nivel=1;
-var municao=7;
+var municao=10;
 var pontuacao=0;
 var score=new Array();
 var menu=0;
@@ -31,11 +31,12 @@ function preload(){
   nivel3=loadImage('nivel3.jpg');
   nivel4=loadImage('nivel4.png');
   nivel5=loadImage('nivel5.jpg');
-  sasuke=loadImage('sasuke.png');
-  naruto=loadImage('naruto.png');
+  sasuke=loadImage('sasuke.png');  
   shuriken=loadImage('shuriken.png');
   clone=loadImage('clone.png');
+  naruto=loadImage('naruto.png');
 }
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   image(menu0, 0, 0, windowWidth, windowHeight);
@@ -48,6 +49,7 @@ function setup() {
   
 function draw() {  
   display();
+  colisao();
   clear();           //Limpa a tela após o movimento
   //setup();
   display();
@@ -91,6 +93,7 @@ function display(){
     text('VIDAS: '+vidas, 1150, 50);
     textSize(13);  
     text('Nível '+nivel, 1230, 589);
+    text('Shuriken: '+municao, 120, 589);
 
     //Jogador
     image(sasuke, xJogador, yJogador, 120, 120);
@@ -112,6 +115,7 @@ function display(){
     textSize(100);
     textStyle(BOLD)
     fill(0);
+    stroke(255);
     text('GAME OVER', 380, 250);    
   }
   if(menu==3){
@@ -176,10 +180,12 @@ function move(){
     yJogador+=10;
   }
 
-  if(keyIsDown(32) && xTiro>=width){
-    tiro=true;
-    xTiro=xJogador;
-    yTiro=yJogador;    
+  if(municao>0){
+    if(keyIsDown(32) && xTiro>=width){
+      tiro=true;
+      xTiro=xJogador;
+      yTiro=yJogador;
+    }
   }
 
   if(tiro==true){
@@ -187,10 +193,9 @@ function move(){
   }
 
   if(xTiro>=width){
-    tiro=false;
+    tiro=false;    
   }
 
-  colisao();
   if(menu==1){
     if (nivel==1){
       //image(nivel1, 0, 0, windowWidth, windowHeight);
@@ -200,6 +205,7 @@ function move(){
         pontuacao+=pontos;      
         pontos=0;
         velocidade+=2;
+        municao=10;
         noLoop();
         setTimeout(reiniciar, 3000); 
       }
@@ -213,6 +219,7 @@ function move(){
         pontuacao+=pontos;
         pontos=0;
         velocidade+=2;
+        municao=15;
         noLoop();
         setTimeout(reiniciar, 3000);
       }
@@ -226,6 +233,7 @@ function move(){
         pontuacao+=pontos;
         pontos=0;
         velocidade+=2;
+        municao=22;
         noLoop();
         setTimeout(reiniciar, 3000);
       }
@@ -238,6 +246,7 @@ function move(){
         score[3]=pontos;
         pontuacao+=pontos;
         velocidade+=1;
+        municao=34;
         noLoop();
         setTimeout(reiniciar, 3000);
         pontos=0;
@@ -252,6 +261,7 @@ function move(){
         pontuacao+=pontos;
         pontos=0;
         velocidade+=1;
+        municao=50;
         noLoop();
         setTimeout(reiniciar, 3000);
       }
@@ -266,7 +276,7 @@ function move(){
 function colisao(){
   //Colisão JOGADOR-OBSTÁCULO
   for (var i=0; i<5; i++){
-    if ((xObstaculo[i]<=xJogador+12 && xObstaculo[i]+12>=xJogador-12) && (yObstaculo[i]-5<=yJogador+5 && yObstaculo[i]+5>=yJogador-5)){
+    if ((xObstaculo[i]<=xJogador+80 && xObstaculo[i]+100>=xJogador-80) && (yObstaculo[i]-50<=yJogador+50 && yObstaculo[i]+50>=yJogador-50)){
       noLoop();        
       if(vidas>0){
         vidas-=1;
@@ -282,11 +292,12 @@ function colisao(){
   //Colisão TIRO-OBSTÁCULO
   for (var i=0; i<5; i++){
     if(tiro==true){
-      if(xTiro>xObstaculo[i]-10 && (yTiro>=yObstaculo[i]-10 && yTiro<=yObstaculo[i]+10)){
+      if(xTiro>xObstaculo[i]-50 && (yTiro>=yObstaculo[i]-50 && yTiro<=yObstaculo[i]+50)){
         pontos+=20;
         xTiro=1400;
+        municao-=1;
         image(clone, xObstaculo[i], yObstaculo[i], 120, 120);
-        yObstaculo[i]=random(50, windowHeight-70);
+        yObstaculo[i]=random(0, windowHeight-120);
         xObstaculo[i]=random(windowWidth, windowWidth+1000);
       }
     }
